@@ -60,10 +60,13 @@ def CheckWhatInBox(c1, r1):
 
 
 def main():
-    PrintCurrentBoard()
-    c1, r1, c2, r2, = getInputMove()
-    pawn = CheckWhatInBox(c1, r1)
-    print (pawn)
+    while True:
+        PrintCurrentBoard()
+        c1, r1, c2, r2, = getInputMove()
+        piece = board[r1][c1]
+        board[r1][c1] = "."
+        board[r2][c2] = piece
+
 
 
 
