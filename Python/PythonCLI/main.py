@@ -13,19 +13,23 @@ board = [
 def PrintCurrentBoard():
     print("\n    a   b   c   d   e   f   g   h")
     print("  #---------------------------------#")
+
     for r_idx, row in enumerate(board):
         rank_num = 8 - r_idx
         print(f"{rank_num} # ", end="")
+
         for cell in row:
             print(cell, end="   ")
+
         print(f"# {rank_num}")
+
     print("  #---------------------------------#")
     print("    a   b   c   d   e   f   g   h\n")
 
 
 
 def getInputMove():
-    inputV = input("\n \n Enter move (e.g e2 e4)   : ")
+    inputV = input("\n \n Enter move (ex e2 e4)   : ")
 
     parts = inputV.strip().lower().split()
 
@@ -51,12 +55,35 @@ def getInputMove():
 
 
 
-def CheckWhatInBox(c1, r1):
-    value = board[c1][r1]
-    return value
+def IsPathClear(c1, r1, c2, r2):
+    cstep = 0 if c1 == c2 else (1 if c2 > c1 else -1)
+    rstep = 0 if r1 == r2 else (1 if r2 > r1 else -1)
+
+    currc = c1 + cstep
+    currr = r1 + rstep
+
+    while currc != c2 or currr != r2:
+        if board [currr][currc] != ".":
+            return False
+        currc += cstep
+        currr += rstep
+
+    return True
 
 
+def CheckIfCanMoveThere(c1, r1, c2, r2, piece):
+    target = board[r2][c2]
 
+    if target != ".":
+        if piece.isupper() and target.isupper():
+            return False
+        if piece.islower() and target.islower():
+            return False
+
+    piece = piece.lower()
+
+    if piece == "p":
+        
 
 
 def main():
