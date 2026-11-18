@@ -80,16 +80,42 @@ def CheckIfCanMoveThere(c1, r1, c2, r2, piece):
         if piece.islower() and target.islower():
             return False
 
-    piece = piece.lower()
+    p_lower = piece.lower()
 
-    if piece == "p":
-        
+    if p_lower == "p":
+        is_white = piece.isupper()
+        direction = -1 if is_white else 1
+        start_row = 6 if is_white else 1
+
+        if c1 == c2:
+            if r2 == r1 + direction and target == ".":
+                return True
+            
+            if r1 == start_row and r2 == r1 + (2 * direction) and target == "." and board[r1 + direction][c1] == ".":
+                return True
+            
+            elif abs(c1 - c2) == 1 and r2 == r1 + direction and target != ".":
+                return True
+
+            return False
+
+
+
+
+
+
 
 
 def main():
     while True:
         PrintCurrentBoard()
-        c1, r1, c2, r2, = getInputMove()
+
+        move = getInputMove()
+        if move is None:
+            continue
+        
+        c1, r1, c2, r2 = move
+
         piece = board[r1][c1]
         board[r1][c1] = "."
         board[r2][c2] = piece
