@@ -94,10 +94,18 @@ def CheckIfCanMoveThere(c1, r1, c2, r2, piece):
             if r1 == start_row and r2 == r1 + (2 * direction) and target == "." and board[r1 + direction][c1] == ".":
                 return True
             
-            elif abs(c1 - c2) == 1 and r2 == r1 + direction and target != ".":
-                return True
+        elif abs(c1 - c2) == 1 and r2 == r1 + direction and target != ".":
+            return True
 
+        return False
+
+    if p_lower == "r":
+        if c1 != c2 and r1 != r2:
             return False
+        return IsPathClear(c1, r1, c2, r2)
+
+
+    return False
 
 
 
@@ -108,6 +116,7 @@ def CheckIfCanMoveThere(c1, r1, c2, r2, piece):
 
 def main():
     while True:
+        print("\033[H\033[2J", end="")
         PrintCurrentBoard()
 
         move = getInputMove()
@@ -117,8 +126,16 @@ def main():
         c1, r1, c2, r2 = move
 
         piece = board[r1][c1]
-        board[r1][c1] = "."
-        board[r2][c2] = piece
+        if piece == ".":
+            print("No piece there")
+            continue
+        
+        if CheckIfCanMoveThere(c1, r1, c2, r2, piece):
+            board[r1][c1] = "."
+            board[r2][c2] = piece
+        else:
+            print("Invalid move for that piece")
+
 
 
 
